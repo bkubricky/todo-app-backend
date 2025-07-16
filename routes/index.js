@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const mongoose = require("mongoose");
-const Todos = require("./models/Todos");
+const Todos = require("../models/Todos");
 require("dotenv").config();
 
 // Body parsing middleware
