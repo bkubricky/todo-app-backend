@@ -5,8 +5,7 @@ const Todos = require("../models/Todos");
 require("dotenv").config();
 
 // Body parsing middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 mongoose.connect(`${process.env.MONGODB_URI}`);
 
 /* GET home page. */
