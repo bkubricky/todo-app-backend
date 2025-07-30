@@ -8,26 +8,32 @@ require("dotenv").config();
 
 mongoose.connect(`${process.env.MONGODB_URI}`);
 
-/* GET home page. */
-router.get("/", async function (req, res, next) {
+// GET all todos
+router.get("/", async function (req, res) {
   const todoList = await Todos.find();
-  res.send(todoList);
+  res.json(todoList); // ✅ Return data
 });
 
+// CREATE new todo
 router.post("/new", async function (req, res) {
-  await Todos.create(req.body);
-  res.status(200);
+  const newTodo = await Todos.create(req.body);
+  res.status(201).json(newTodo); // ✅ Return created item
 });
 
+// UPDATE todo
 router.post("/:id/update", async function (req, res) {
   const { id } = req.params;
-  await Todos.findOneAndUpdate({ id: id }, req.body);
-  res.status(200);
+  const updated = await Todos.findOneAndUpdate({ id: id }, req.body, {
+    new: true,
+  });
+  res.status(200).json(updated); // ✅ Return updated item
 });
 
+// DELETE todo
 router.post("/:id/delete", async function (req, res) {
   const { id } = req.params;
   await Todos.deleteOne({ id: id });
-  res.status(200);
+  res.status(200).json({ success: true }); // ✅ Send response
 });
+
 module.exports = router;
